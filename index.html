@@ -1,0 +1,133 @@
+<html>
+<head>
+	<title>web editor</title>
+	<link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.min.css">
+	<style type="text/css">
+		#edit_box{
+			width: 400px;
+			height: 400px;
+			margin-top: 10px;
+			border: solid 1px grey;
+		}
+		button{
+			display: inline-block;
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+</body>
+</html>
+<script type="text/javascript">
+	//初始化按钮
+	var command_list = [
+		{
+			"code": 'backColor',
+			"name": '修改背景颜色'
+		},
+		{
+			"code": 'bold',
+			"name": '粗体'
+		},
+		{
+			"code": 'italic',
+			"name": '斜体'
+		},
+		// {
+		// 	"code": 'contentReadOnly',
+		// 	"name": '只读'
+		// },
+		{
+			"code": 'copy',
+			"name": '复制'
+		},
+		{
+			"code": 'cut',
+			"name": '剪切'
+		},
+		{
+			"code": 'undo',
+			"name": '撤销'
+		},
+		{
+			"code": 'redo',
+			"name": '回到撤销'
+		},
+		{
+			"code": 'underline',
+			"name": '下划线'
+		},
+		{
+			"code": 'selectAll',
+			"name": '全选'
+		},
+		// {
+		// 	"code": 'paste',
+		// 	"name": '粘贴'
+		// },
+		// {
+		// 	"code": 'decreaseFontSize',
+		// 	"name": '缩小'
+		// },
+		{
+			"code": 'delete',
+			"name": '删除'
+		},
+		{
+			"code": 'fontName',
+			"name": '改变字体类型'
+		},
+		{
+			"code": 'fontSize',
+			"name": '调整字体大小'
+		},
+		{
+			"code": 'foreColor',
+			"name": '改变字体颜色'
+		},
+		// {
+		// 	"code": 'heading',
+		// 	"name": '添加标题'
+		// },
+		// {
+		// 	"code": 'increaseFontSize',
+		// 	"name": '放大'
+		// },
+	];
+
+	//执行方法
+	var do_act = function(type){
+		var do_flage;
+		switch(type){
+			case 'contentReadOnly':
+				do_flage = document.execCommand(type,false,null);
+			case 'backColor':
+			case 'foreColor':
+				do_flage = document.execCommand(type,false,'red');
+			case 'fontSize':
+				do_flage = document.execCommand(type,false,7);	//返回false?
+				do_flage = true;
+			case 'heading':
+				do_flage = document.execCommand(type,false,'H1');	//返回false?
+			default:
+				do_flage = document.execCommand(type);
+		}
+		alert(do_flage);
+	}
+
+	//创建按钮
+	var command_len = command_list.length;
+	for(var i = 0; i < command_len; i++){
+		var btn = document.createElement('button');
+		btn.innerHTML = command_list[i].code;
+		btn.setAttribute('title',command_list[i].name);
+		btn.setAttribute('onclick','do_act("'+command_list[i].code+'")');
+		document.body.appendChild(btn);
+	}
+
+	//创建编辑区域
+	var edit_box = document.createElement('div');
+	edit_box.setAttribute('id','edit_box');
+	edit_box.setAttribute('contentEditAble',true);
+	document.body.appendChild(edit_box);
+</script>
